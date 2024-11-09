@@ -39,4 +39,4 @@ for _ in range(0,19):
     Mesh.show()
     Temp.show()
     Array=np.array(Temp)
-    print(Array.shape)
+    print(Array.shape,"Shapes")
