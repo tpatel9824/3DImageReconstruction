@@ -1,4 +1,4 @@
-3D Image Reconstruction Project
+<h1> 3D Image Reconstruction Project </h1>
 Contributors: Shubh Patel, Tejas Patel
 
 Overview
