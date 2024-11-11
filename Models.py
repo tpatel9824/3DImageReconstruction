@@ -1,5 +1,6 @@
 import sys
 
+
 if __name__ == '__main__':
     from main import DDataset
     import torch
@@ -15,4 +16,7 @@ if __name__ == '__main__':
     print("Feature Batch Shape", train_labels)
     for batch in train_loader:
         images,label=batch
-        print(images.shape)
+        print("Size Of A Batch Is",images.shape)
+        break
+
+
