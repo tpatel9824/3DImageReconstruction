@@ -19,6 +19,7 @@ class DDataset(Dataset) :
         self.transforms=transforms
         self.default_transforms=tf.Compose([tf.Resize((214, 214)),tf.ToTensor()])
     def __getitem__(self, idx):
+        print(self.dataframe.iloc[idx,1])
         Img_Path=os.path.join(self.root,self.dataframe.iloc[idx,0],self.dataframe.iloc[idx,1],self.dataframe.iloc[idx,2],self.dataframe.iloc[idx,3])
         Img_Path1=os.path.join(self.root,self.dataframe.iloc[idx,0],self.dataframe.iloc[idx,1],self.dataframe.iloc[idx,2],self.dataframe.iloc[idx,6])
         Img_Path2=os.path.join(self.root,self.dataframe.iloc[idx,0],self.dataframe.iloc[idx,1],self.dataframe.iloc[idx,2],self.dataframe.iloc[idx,7])
@@ -56,8 +57,8 @@ class DDataset(Dataset) :
 directory=r'C:\Users\91875\Downloads\pix3dorg'
 DataFrame=pd.read_csv(r'C:\Users\91875\Downloads\pix3dorg\Annotations.csv')
 Data=DDataset(DataFrame,directory)
-Data.__getitem__(9)
-for _ in range(0,30):
+Data.__getitem__(53)
+for _ in range(0,158):
     Temp,Mesh=Data.__getitem__(_)
     #Mesh.show()
     #Temp.show()
