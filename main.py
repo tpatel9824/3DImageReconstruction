@@ -17,26 +17,48 @@ class DDataset(Dataset) :
         self.root=root_dir
         self.dataframe=dataframe
         self.transforms=transforms
-        self.default_transforms=None
+        self.default_transforms=tf.Compose([tf.Resize((214, 214)),tf.ToTensor()])
     def __getitem__(self, idx):
         Img_Path=os.path.join(self.root,self.dataframe.iloc[idx,0],self.dataframe.iloc[idx,1],self.dataframe.iloc[idx,2],self.dataframe.iloc[idx,3])
-        Obj_Path=os.path.join(self.root,self.dataframe.iloc[idx,0],self.dataframe.iloc[idx,1],self.dataframe.iloc[idx,4],self.dataframe.iloc[idx,5])
+        Img_Path1=os.path.join(self.root,self.dataframe.iloc[idx,0],self.dataframe.iloc[idx,1],self.dataframe.iloc[idx,2],self.dataframe.iloc[idx,6])
+        Img_Path2=os.path.join(self.root,self.dataframe.iloc[idx,0],self.dataframe.iloc[idx,1],self.dataframe.iloc[idx,2],self.dataframe.iloc[idx,7])
+        Img_Path3=os.path.join(self.root,self.dataframe.iloc[idx,0],self.dataframe.iloc[idx,1],self.dataframe.iloc[idx,2],self.dataframe.iloc[idx,8])
+        Img_Path4=os.path.join(self.root,self.dataframe.iloc[idx,0],self.dataframe.iloc[idx,1],self.dataframe.iloc[idx,2],self.dataframe.iloc[idx,9])
 
+
+        Obj_Path=os.path.join(self.root,self.dataframe.iloc[idx,0],self.dataframe.iloc[idx,1],self.dataframe.iloc[idx,4],self.dataframe.iloc[idx,5])
         Mesh=trimesh.load_mesh(Obj_Path)
 
+
         Img1=cv2.imread(Img_Path)
-        Img=Image.fromarray(Img1)
+        Img1=Image.fromarray(Img1)
+        Img1=self.default_transforms(Img1)
 
-        return Img,Mesh
+        Img2 = cv2.imread(Img_Path1)
+        Img2 = Image.fromarray(Img2)
+        Img2 = self.default_transforms(Img2)
+
+        Img3 = cv2.imread(Img_Path2)
+        Img3 = Image.fromarray(Img3)
+        Img3 = self.default_transforms(Img3)
+
+        Img4 = cv2.imread(Img_Path3)
+        Img4 = Image.fromarray(Img4)
+        Img4 = self.default_transforms(Img4)
+
+        Img5 = cv2.imread(Img_Path4)
+        Img5 = Image.fromarray(Img5)
+        Img5 = self.default_transforms(Img5)
+
+        return torch.stack([Img1,Img2,Img3,Img4,Img5]),Mesh
 
 
-directory=r'C:\Users\91875\Downloads\Pix3D_organized'
-DataFrame=pd.read_csv(r'C:\Users\91875\Downloads\Pix3D_organized\Annotations.csv')
+directory=r'C:\Users\91875\Downloads\pix3dorg'
+DataFrame=pd.read_csv(r'C:\Users\91875\Downloads\pix3dorg\Annotations.csv')
 Data=DDataset(DataFrame,directory)
-Data.__getitem__(5)
-for _ in range(0,19):
+Data.__getitem__(9)
+for _ in range(0,30):
     Temp,Mesh=Data.__getitem__(_)
-    Mesh.show()
-    Temp.show()
-    Array=np.array(Temp)
-    print(Array.shape,"Shapes")
+    #Mesh.show()
+    #Temp.show()
+    print(Temp.shape)
