@@ -1,5 +1,8 @@
 import sys
-
+import torch
+import torch.nn as nn
+import torch.optim as optim
+import torch.nn.functional as F
 
 if __name__ == '__main__':
     from main import DDataset
@@ -17,6 +20,14 @@ if __name__ == '__main__':
     for batch in train_loader:
         images,label=batch
         print("Size Of A Batch Is",images.shape)
-        break
+
+
+
+
+
+
+
+
+
 
 
