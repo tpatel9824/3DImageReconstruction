@@ -109,7 +109,7 @@ class DDataset(Dataset) :
 #Data=DDataset(DataFrame,directory)
 #Obj=Data.__getitem__(2)
 #Img,Lab=Obj[0],Obj[1]
-#for i in range(0,158):
+#for i in range(30,31):
     #Obj = Data.__getitem__(i)
     #Img,Lab=Obj[0],Obj[1]
     #for _ in range(0,5):
