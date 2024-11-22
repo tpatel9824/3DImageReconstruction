@@ -106,14 +106,19 @@ class DDataset(Dataset) :
 
 #directory=r'C:\Users\91875\Downloads\pix3dorg'
 #DataFrame=pd.read_csv(r'C:\Users\91875\Downloads\pix3dorg\Annotations.csv')
+#directory = r'C:\Users\91875\OneDrive\Desktop\3D_RECONSTRUCTION\Training'
+
+#DataFrame = pd.read_csv(r'C:\Users\91875\OneDrive\Desktop\3D_RECONSTRUCTION\Training\Annotations.csv')
 #Data=DDataset(DataFrame,directory)
 #Obj=Data.__getitem__(2)
 #Img,Lab=Obj[0],Obj[1]
-#for i in range(30,31):
+#for i in range(45,47):
     #Obj = Data.__getitem__(i)
     #Img,Lab=Obj[0],Obj[1]
     #for _ in range(0,5):
         #Images=tf.ToPILImage()(Img[_])
         #plt.imshow(Images)
+        #plt.axis('off')  # Removes axis lines for a clean image
+        #plt.savefig(str(i)+str(_) + '_saved_image.jpg', bbox_inches='tight')
         #plt.show()
 
