@@ -10,6 +10,13 @@ from PIL import  Image
 import sys
 from torchvision import transforms as tf
 import matplotlib.pyplot as plt
+import scipy.io
+from mpl_toolkits.mplot3d import Axes3D
+import torch.nn as nn
+import plotly.graph_objects as go
+import torch.nn.functional as F
+
+
 print(torch.__version__)
 
 Mean=[0.485, 0.456, 0.406]
@@ -42,8 +49,15 @@ class DDataset(Dataset) :
 
 
 
-        Obj_Path=os.path.join(self.root,self.dataframe.iloc[idx,0],self.dataframe.iloc[idx,1],self.dataframe.iloc[idx,4],self.dataframe.iloc[idx,5])
-        Mesh=trimesh.load_mesh(Obj_Path)
+        Voxel_Path=os.path.join(self.root,self.dataframe.iloc[idx,0],self.dataframe.iloc[idx,1],self.dataframe.iloc[idx,4],self.dataframe.iloc[idx,5])
+        Mat_Data=scipy.io.loadmat(Voxel_Path)
+        Voxels=Mat_Data['voxel']
+        Voxel_T=torch.tensor(Voxels,dtype=torch.float32)
+
+        target_size = (50,50,50)
+        voxel_downsampled = F.interpolate(Voxel_T.unsqueeze(0).unsqueeze(0), size=target_size, mode='trilinear',
+                                          align_corners=False)
+        Voxel_T = voxel_downsampled.squeeze(0)
 
 
         Img1=cv2.imread(Img_Path)
@@ -79,7 +93,6 @@ class DDataset(Dataset) :
 
 
 
-
         Img4 = cv2.imread(Img_Path3)
         Mask = cv2.imread(Mask_Path3, cv2.IMREAD_GRAYSCALE)
         _, binary_mask = cv2.threshold(Mask, 128, 255, cv2.THRESH_BINARY)
@@ -101,24 +114,10 @@ class DDataset(Dataset) :
 
 
 
-        return (torch.stack([Img1,Img2,Img3,Img4,Img5]),Label)
+        return (torch.stack([Img1,Img2,Img3,Img4,Img5]),Voxel_T,Label)
 
 
-#directory=r'C:\Users\91875\Downloads\pix3dorg'
-#DataFrame=pd.read_csv(r'C:\Users\91875\Downloads\pix3dorg\Annotations.csv')
-#directory = r'C:\Users\91875\OneDrive\Desktop\3D_RECONSTRUCTION\Training'
 
-#DataFrame = pd.read_csv(r'C:\Users\91875\OneDrive\Desktop\3D_RECONSTRUCTION\Training\Annotations.csv')
-#Data=DDataset(DataFrame,directory)
-#Obj=Data.__getitem__(2)
-#Img,Lab=Obj[0],Obj[1]
-#for i in range(45,47):
-    #Obj = Data.__getitem__(i)
-    #Img,Lab=Obj[0],Obj[1]
-    #for _ in range(0,5):
-        #Images=tf.ToPILImage()(Img[_])
-        #plt.imshow(Images)
-        #plt.axis('off')  # Removes axis lines for a clean image
-        #plt.savefig(str(i)+str(_) + '_saved_image.jpg', bbox_inches='tight')
-        #plt.show()
+
+
 

@@ -23,7 +23,7 @@ if __name__ == '__main__':
 
     directory1=r'C:\Users\91875\OneDrive\Desktop\3D_RECONSTRUCTION\Validation'
     DataFrame1=pd.read_csv(r'C:\Users\91875\OneDrive\Desktop\3D_RECONSTRUCTION\Validation\Annotations.csv')
-    Data1=DDataset(DataFrame1,directory)
+    Data1=DDataset(DataFrame1,directory1)
     validation_loader=torch.utils.data.DataLoader(Data1,batch_size=5,num_workers=2,shuffle=True)
 
     # Ensure the code below is only executed after DataLoader is initialized
